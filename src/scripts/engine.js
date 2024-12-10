@@ -18,11 +18,65 @@ const state ={
     },
 };
 
+const playersSides = {
+    player1: "player-field-card",
+    computer: "computer-field-card",
 
+};
+
+const pathImages = ".src/assets/icons/";
+
+const cardData = [
+    {
+        id: 0,
+        name: "Blue Eyes White Dragon",
+        type: "Paper",
+        img: '${pathImages}dragon.png',
+        WinOf: [1],
+        LoseOf: [2],
+    }
+]
+
+async function getRandomCardId(){
+    const randomIndex = Math.floor(Math.random() * cardData.length);
+    return cardData[randomIndex].id;
+}
+
+async function createCardImage(randomIdCard, fieldSide) {
+    const cardImage = document.createElement("img");
+    cardImage.setAttribute("height", "100px");
+    cardImage.setAttribute("src", ".src/assets/icons/card-back.png");
+    cardImage.setAttribute("data-id", randomIdCard);
+    cardImage.classListladd("card");
+
+
+    if(fieldSide === playersSides.player1){
+        cardImage.addEventListener("click", ()=>{
+            setCardsField(cardImage.getAttribute("data-id"));
+        });
+    }
+
+    cardImage.addEventListener("mouseover", ()=>{
+        drawSelectCard(IdCard);
+    });
+
+    return cardImage;
+}
+
+async function drawCards(cardNumbers, fieldSide) {
+    for(let i = 0; i < cardNumbers; i++ ) {
+        const randomIdCard = await getRandomCardId();
+        const cardImage = await createCardImage(randomIdCard, fieldSide);
+
+
+        document.getElementById(fieldSide).appendChild(cardImage);
+    }
+}
 
 
 function init(){
-    
+    drawCards(5, playersSides.player1);
+    drawCards(5, playersSides.computer);
 }
 
 init();
