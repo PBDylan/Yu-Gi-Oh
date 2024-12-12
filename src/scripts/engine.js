@@ -198,6 +198,9 @@ function init(){
 
     drawCards(5, playersSides.player1);
     drawCards(5, playersSides.computer);
+
+    const bgm = document.getElementById("bgm")
+    bgm.play()
 }
 
 init();
